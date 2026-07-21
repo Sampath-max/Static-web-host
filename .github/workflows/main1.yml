@@ -1,0 +1,27 @@
+name: deploy the application
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cloning the repository
+        uses: actions/checkout@v4
+      - name: copy to target
+        uses: appleboy/scp-action@v1
+        with:
+          username: ${{ secrets.USER_NAME }}
+          host: ${{ secrets.EC2_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "./*"
+          target: /home/${{ secrets.USER_NAME }}/apps
+      - name: deploy the files
+        uses: appleboy/ssh-action@v1
+        with:
+          username: ${{ secrets.USER_NAME }}
+          host: ${{ secrets.EC2_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo cp -r /home/${{ secrets.USER_NAME }}/apps/* /var/www/html
+            sudo systemctl restart nginx
+        
