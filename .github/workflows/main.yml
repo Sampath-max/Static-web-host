@@ -13,7 +13,7 @@ jobs:
           user: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.EC2_HOST }}
-          copy: "./*"
+          source: "./*"
           target: "/home/${{ secrets.USER_NAME }}/app"
       - name: deploy the files
         uses: appleboy/ssh-action@v1
