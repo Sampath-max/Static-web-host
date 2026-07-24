@@ -14,7 +14,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.EC2_HOST }}
           source: "./*"
-          target: "/home/${{ secrets.USER_NAME }}/apps
+          target: "/home/${{ secrets.USER_NAME }}/apps"
       - name: deploy the application
         uses: appleboy/action@v1
         with:
