@@ -1,0 +1,26 @@
+name: direct
+on:
+  workflow_dispatch:
+jobs:
+  deploy1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cloning the repsoitory
+        uses: actions/checkout@v4
+      - name: copy the files to target
+        uses: appleboy/action@v1
+        with:
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.EC2_HOST }}
+          source: "./*"
+          target: "/home/${{ secrets.USER_NAME }}/apps
+      - name: deploy the application
+        uses: appleboy/action@v1
+        with:
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.EC2_HOST }}
+          script: |
+              sudo cp -r /home/${{ secrets.USER_NAME }}/apps/* /var/www/html
+              sudo systemctl restart nginx
