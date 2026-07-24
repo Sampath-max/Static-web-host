@@ -8,7 +8,7 @@ jobs:
       - name: cloning the repsoitory
         uses: actions/checkout@v4
       - name: copy the files to target
-        uses: appleboy/action@v1
+        uses: appleboy/scp-action@v1
         with:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
@@ -16,7 +16,7 @@ jobs:
           source: "./*"
           target: "/home/${{ secrets.USER_NAME }}/apps"
       - name: deploy the application
-        uses: appleboy/action@v1
+        uses: appleboy/ssh-action@v1
         with:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
